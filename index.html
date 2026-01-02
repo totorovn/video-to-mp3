@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:"
+    />
+    <title>Video to MP3 Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Custom Title Bar -->
+    <div class="title-bar">
+      <div class="title-bar-drag">
+        <div class="app-icon">🎵</div>
+        <span class="app-title">Video to MP3 Converter</span>
+      </div>
+      <div class="window-controls">
+        <button class="control-btn minimize" id="btn-minimize">
+          <svg width="12" height="12" viewBox="0 0 12 12">
+            <rect y="5" width="12" height="2" fill="currentColor" />
+          </svg>
+        </button>
+        <button class="control-btn maximize" id="btn-maximize">
+          <svg width="12" height="12" viewBox="0 0 12 12">
+            <rect
+              x="1"
+              y="1"
+              width="10"
+              height="10"
+              stroke="currentColor"
+              stroke-width="1.5"
+              fill="none"
+            />
+          </svg>
+        </button>
+        <button class="control-btn close" id="btn-close">
+          <svg width="12" height="12" viewBox="0 0 12 12">
+            <path
+              d="M1 1L11 11M11 1L1 11"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- App Layout: Sidebar + Main Content -->
+    <div class="app-layout">
+      <!-- Left Sidebar: File List -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3>📁 Danh sách file <span class="file-count" id="file-count">(0)</span></h3>
+          <button class="btn-clear" id="btn-clear" title="Xóa tất cả">✕</button>
+        </div>
+        <div class="file-list" id="file-list">
+          <!-- Files will be added here dynamically -->
+        </div>
+        <div class="sidebar-empty" id="sidebar-empty">
+          <div class="empty-icon">📭</div>
+          <p>Chưa có file nào</p>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Drop Zone -->
+        <div class="drop-zone" id="drop-zone">
+          <div class="drop-zone-content">
+            <div class="drop-icon">🎬</div>
+            <h2>Kéo &amp; thả video vào đây</h2>
+            <p>hoặc click để chọn file</p>
+            <span class="supported-formats">MP4, AVI, MKV, MOV, WMV, FLV, WebM</span>
+          </div>
+          <input
+            type="file"
+            id="file-input"
+            multiple
+            accept=".mp4,.avi,.mkv,.mov,.wmv,.flv,.webm,.m4v,.3gp"
+            hidden
+          />
+        </div>
+
+        <!-- Settings -->
+        <div class="settings">
+          <div class="setting-group">
+            <label for="quality">🎚️ Chất lượng:</label>
+            <select id="quality" class="select-quality">
+              <option value="320">320 kbps (Cao nhất)</option>
+              <option value="256">256 kbps (Cao)</option>
+              <option value="192">192 kbps (Trung bình)</option>
+              <option value="128">128 kbps (Thấp)</option>
+            </select>
+          </div>
+
+          <div class="setting-group">
+            <label>📂 Thư mục xuất:</label>
+            <div class="output-dir-wrapper">
+              <input
+                type="text"
+                id="output-dir"
+                class="output-dir"
+                readonly
+                placeholder="Chọn thư mục..."
+              />
+              <button class="btn-browse" id="btn-browse">Chọn...</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Convert Button -->
+        <button class="btn-convert" id="btn-convert" disabled>
+          <span class="btn-icon">🚀</span>
+          <span class="btn-text">Chuyển đổi sang MP3</span>
+        </button>
+
+        <!-- Progress Section -->
+        <div class="progress-section" id="progress-section">
+          <div class="progress-header">
+            <span class="progress-title">Đang chuyển đổi...</span>
+            <span class="progress-status" id="progress-status">0 / 0</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-section" id="success-section">
+          <div class="success-icon">✅</div>
+          <h3>Chuyển đổi thành công!</h3>
+          <p id="success-message">Đã chuyển đổi 0 file</p>
+          <button class="btn-open-folder" id="btn-open-folder">
+            📂 Mở thư mục
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
